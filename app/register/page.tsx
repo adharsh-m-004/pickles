@@ -22,7 +22,7 @@ export default function Register() {
             if (response.ok) {
                 alert("User registered successfully");
                 // 3. Use router.push for client-side navigation
-                router.push("/");
+                router.push("/dashboard");
             } else {
                 alert(data.message || "Registration failed");
             }
