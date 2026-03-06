@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface Pickle {
-    id: number;
+    pid: number;
     name: string;
     price: string | number;
     description?: string;
@@ -15,8 +15,9 @@ interface User {
 }
 
 interface CartItem {
-    id: number;
     pid: number;
+    name: string;
+    price: number;
     qty: number;
 }
 
@@ -47,6 +48,7 @@ export default function Dashboard() {
 
             const result = await response.json();
             setData(result.data || []);
+            console.log(result.data)
         } catch (err: any) {
             console.error("Connection failed. Is the backend server running?", err);
             setError(err.message || "Failed to fetch pickles. Make sure the backend is running.");
@@ -119,14 +121,15 @@ export default function Dashboard() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h1> data: {JSON.stringify(data)}</h1>
                 {data.map((item) => (
-                    <div key={item.id} className="border p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div key={item.pid} className="border p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                         <h2 className="text-xl font-semibold">{item.name}</h2>
                         <p className="text-gray-600 mt-2">${item.price}</p>
                         <div className="flex gap-2 mt-4">
                             <button
                                 className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
-                                onClick={() => addCart(user.id, item.id, 1)}
+                                onClick={() => { console.log(item); addCart(user.id, item.pid, 1) }}
                             >
                                 Add to Cart
                             </button>

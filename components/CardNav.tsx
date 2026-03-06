@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from "next/navigation";
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { GoArrowUpRight } from 'react-icons/go';
@@ -161,7 +162,7 @@ const CardNav: React.FC<CardNavProps> = ({
     const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
         cardsRef.current[i] = el;
     };
-
+    const router = useRouter();
     return (
         <div className={`card-nav-container ${className}`}>
             <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`} style={{ backgroundColor: baseColor }}>
@@ -193,6 +194,8 @@ const CardNav: React.FC<CardNavProps> = ({
                         type="button"
                         className="card-nav-cta-button"
                         style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+                        onClick={() => router.push('/login')}
+                        aria-label="Log in"
                     >
                         Log in
                     </button>
