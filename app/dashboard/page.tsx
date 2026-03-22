@@ -38,9 +38,18 @@ export default function Dashboard() {
     }, [router]);
 
     const displayPickles = async () => {
+        const data = localStorage.getItem('data')
+        const parsedData = JSON.parse(data)
+        console.log("token:", parsedData.token)
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-            const response = await fetch(`${apiUrl}/dashboard`);
+            const apiUrl = 'http://localhost:3001/api/products/dashboard';
+            const response = await fetch(apiUrl,
+                {
+                    headers: {
+                        Authorization: `Bearer ${parsedData.token}`
+                    }
+                }
+            )
 
             if (!response.ok) {
                 throw new Error(`Error ${response.status}: Check if your backend route is correct.`);
@@ -57,7 +66,7 @@ export default function Dashboard() {
 
     const fetchCart = async (userId: number) => {
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+            const apiUrl = 'http://localhost:3001/api/cart';
             const response = await fetch(`${apiUrl}/my-cart?userId=${userId}`);
             if (response.ok) {
                 const result = await response.json();
@@ -70,8 +79,8 @@ export default function Dashboard() {
 
     const addCart = async (userId: number, productId: number, qty: number) => {
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-            const response = await fetch(`${apiUrl}/cart`, {
+            const apiUrl = 'http://localhost:3001/api/cart';
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,6 +99,7 @@ export default function Dashboard() {
 
     const logout = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         router.push('/login');
     }
 

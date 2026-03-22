@@ -16,8 +16,8 @@ export default function LoginPage() {
         setLoading(true)
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
-            const response = await fetch(`${apiUrl}/login`, {
+            const apiUrl = 'http://localhost:3001/api/auth/login'
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -26,7 +26,8 @@ export default function LoginPage() {
             const data = await response.json()
 
             if (response.ok) {
-                localStorage.setItem('user', JSON.stringify(data.user))
+                console.log(data)
+                localStorage.setItem('data', JSON.stringify(data))
                 router.push('/dashboard')
             } else {
                 setError(data.message || 'Login failed')
