@@ -29,17 +29,24 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        const storedData = localStorage.getItem('data');
+        if (storedData) {
+            try {
+                const parsed = JSON.parse(storedData);
+                setUser(parsed.user);
+            } catch (err) {
+                console.error("Failed to parse user data", err);
+                router.push('/login');
+            }
         } else {
             router.push('/login');
         }
     }, [router]);
 
     const displayPickles = async () => {
-        const data = localStorage.getItem('data')
-        const parsedData = JSON.parse(data)
+        const rawData = localStorage.getItem('data')
+        if (!rawData) return;
+        const parsedData = JSON.parse(rawData)
         console.log("token:", parsedData.token)
         try {
             const apiUrl = 'http://localhost:3001/api/products/dashboard';
@@ -98,8 +105,7 @@ export default function Dashboard() {
     }
 
     const logout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
+        localStorage.removeItem('data');
         router.push('/login');
     }
 
