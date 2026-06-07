@@ -49,80 +49,166 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Redefined using Stitch color tokens */
+  --background: #fff8ef;
+  --foreground: #1e1b13;
+  --card: #fbf3e4;
+  --card-foreground: #1e1b13;
+  --popover: #fff8ef;
+  --popover-foreground: #1e1b13;
+  --primary: #345329;
+  --primary-foreground: #ffffff;
+  --secondary: #934b19;
+  --secondary-foreground: #ffffff;
+  --muted: #f5edde;
+  --muted-foreground: #43483f;
+  --accent: #f5edde;
+  --accent-foreground: #1e1b13;
+  --destructive: #ba1a1a;
+  --border: #c3c8bc;
+  --input: #c3c8bc;
+  --ring: #73796e;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #1e1b13;
+  --foreground: #fff8ef;
+  --card: #343026;
+  --card-foreground: #fff8ef;
+  --popover: #1e1b13;
+  --popover-foreground: #fff8ef;
+  --primary: #acd19c;
+  --primary-foreground: #042101;
+  --secondary: #ffdbc9;
+  --secondary-foreground: #321200;
+  --muted: #343026;
+  --muted-foreground: #c3c8bc;
+  --accent: #343026;
+  --accent-foreground: #fff8ef;
+  --destructive: #ffdad6;
+  --border: #73796e;
+  --input: #73796e;
+  --ring: #c3c8bc;
+}
+
+@theme {
+  --color-tertiary-container: #bb2927;
+  --color-on-error: #ffffff;
+  --color-tertiary-fixed-dim: #ffb4ac;
+  --color-error: #ba1a1a;
+  --color-inverse-on-surface: #f8f0e1;
+  --color-surface-dim: #e1d9cb;
+  --color-secondary-fixed-dim: #ffb68c;
+  --color-on-background: #1e1b13;
+  --color-primary-fixed: #c8edb6;
+  --color-secondary-fixed: #ffdbc9;
+  --color-error-container: #ffdad6;
+  --color-surface-container-highest: #e9e2d3;
+  --color-secondary: #934b19;
+  --color-on-error-container: #93000a;
+  --color-on-tertiary-fixed-variant: #92030f;
+  --color-tertiary: #980a13;
+  --color-primary-fixed-dim: #acd19c;
+  --color-outline: #73796e;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #e9e2d3;
+  --color-primary-container: #4b6b3f;
+  --color-on-primary-container: #c5eab3;
+  --color-inverse-primary: #acd19c;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ffd6d1;
+  --color-on-primary: #ffffff;
+  --color-surface: #fff8ef;
+  --color-on-secondary: #ffffff;
+  --color-surface-tint: #47673b;
+  --color-tertiary-fixed: #ffdad6;
+  --color-on-tertiary-fixed: #410003;
+  --color-surface-container-high: #efe7d9;
+  --color-on-secondary-container: #783603;
+  --color-on-surface: #1e1b13;
+  --color-outline-variant: #c3c8bc;
+  --color-on-primary-fixed: #042101;
+  --color-on-primary-fixed-variant: #304e25;
+  --color-on-secondary-fixed-variant: #753401;
+  --color-surface-container-low: #fbf3e4;
+  --color-on-surface-variant: #43483f;
+  --color-secondary-container: #ffa26a;
+  --color-inverse-surface: #343026;
+  --color-surface-bright: #fff8ef;
+  --color-surface-container: #f5edde;
+  --color-on-secondary-fixed: #321200;
+
+  /* Custom fonts */
+  --font-headline: var(--font-headline), "Libre Caslon Text", serif;
+  --font-body: var(--font-body), "Plus Jakarta Sans", sans-serif;
+
+  /* Custom spacings */
+  --spacing-gutter: 24px;
+  --spacing-container-max: 1200px;
+  --spacing-section-gap: 80px;
+  --spacing-margin-mobile: 16px;
+  --spacing-base: 8px;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
-    @apply bg-background text-foreground;
   }
+}
+
+/* Custom Stitch visual design classes */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.paper-texture {
+    background-image: url("https://www.transparenttextures.com/patterns/felt-paper.png");
+    opacity: 0.05;
+    pointer-events: none;
+}
+.grain-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    opacity: 0.03;
+    z-index: 50;
+    pointer-events: none;
+}
+.jute-border {
+    border-image: repeating-linear-gradient(45deg, #c3c8bc, #c3c8bc 2px, transparent 2px, transparent 4px) 1;
+}
+.wooden-button {
+    background-color: #5d4037;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+.wooden-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 30%, #000 1px, transparent 1px), 
+                      radial-gradient(circle at 80% 70%, #000 1px, transparent 1px),
+                      linear-gradient(90deg, transparent 45%, rgba(0,0,0,0.1) 50%, transparent 55%);
+    background-size: 40px 40px, 60px 60px, 100% 100%;
+    opacity: 0.3;
+    pointer-events: none;
+}
+.wooden-lid {
+    background: linear-gradient(180deg, #4e342e 0%, #3e2723 100%);
+    border-bottom: 2px solid #2b1d1a;
+    position: relative;
+}
+.wooden-lid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    opacity: 0.4;
+}
+.glass-reflection {
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.3) 100%);
 }

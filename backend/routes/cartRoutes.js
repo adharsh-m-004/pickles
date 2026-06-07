@@ -15,6 +15,7 @@ router.get("/my-cart", authencate, (req, res) => {
             return res.status(500).json({ message: "Database error", error: err.message, ok: false });
         }
         res.status(200).json({ message: "Success", ok: true, data: result });
+        console.log(result)
     });
 });
 

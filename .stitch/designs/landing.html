@@ -1,0 +1,413 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .paper-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/felt-paper.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            opacity: 0.03;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .jute-border {
+            border-image: repeating-linear-gradient(45deg, #c3c8bc, #c3c8bc 2px, transparent 2px, transparent 4px) 1;
+        }
+        .wooden-button {
+            background-color: #5d4037;
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .wooden-button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 30%, #000 1px, transparent 1px), 
+                              radial-gradient(circle at 80% 70%, #000 1px, transparent 1px),
+                              linear-gradient(90deg, transparent 45%, rgba(0,0,0,0.1) 50%, transparent 55%);
+            background-size: 40px 40px, 60px 60px, 100% 100%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .wooden-lid {
+            background: linear-gradient(180deg, #4e342e 0%, #3e2723 100%);
+            border-bottom: 2px solid #2b1d1a;
+            position: relative;
+        }
+        .wooden-lid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            opacity: 0.4;
+        }
+        .glass-reflection {
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.3) 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#bb2927",
+                        "on-error": "#ffffff",
+                        "background": "#fff8ef",
+                        "tertiary-fixed-dim": "#ffb4ac",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f8f0e1",
+                        "surface-dim": "#e1d9cb",
+                        "secondary-fixed-dim": "#ffb68c",
+                        "on-background": "#1e1b13",
+                        "primary-fixed": "#c8edb6",
+                        "secondary-fixed": "#ffdbc9",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e9e2d3",
+                        "secondary": "#934b19",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#92030f",
+                        "tertiary": "#980a13",
+                        "primary-fixed-dim": "#acd19c",
+                        "outline": "#73796e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e9e2d3",
+                        "primary-container": "#4b6b3f",
+                        "on-primary-container": "#c5eab3",
+                        "inverse-primary": "#acd19c",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#345329",
+                        "on-tertiary-container": "#ffd6d1",
+                        "on-primary": "#ffffff",
+                        "surface": "#fff8ef",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#47673b",
+                        "tertiary-fixed": "#ffdad6",
+                        "on-tertiary-fixed": "#410003",
+                        "surface-container-high": "#efe7d9",
+                        "on-secondary-container": "#783603",
+                        "on-surface": "#1e1b13",
+                        "outline-variant": "#c3c8bc",
+                        "on-primary-fixed": "#042101",
+                        "on-primary-fixed-variant": "#304e25",
+                        "on-secondary-fixed-variant": "#753401",
+                        "surface-container-low": "#fbf3e4",
+                        "on-surface-variant": "#43483f",
+                        "secondary-container": "#ffa26a",
+                        "inverse-surface": "#343026",
+                        "surface-bright": "#fff8ef",
+                        "surface-container": "#f5edde",
+                        "on-secondary-fixed": "#321200"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "section-gap": "80px",
+                        "margin-mobile": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Libre Caslon Text"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Libre Caslon Text"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<div class="grain-overlay"></div>
+<!-- TopNavBar -->
+<header class="bg-background border-b border-outline-variant fixed full-width top-0 z-40 w-full" style="transition: transform 0.3s ease-in-out;">
+<nav class="flex justify-between items-center w-full px-gutter py-4 max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md text-secondary dark:text-secondary-fixed">
+                Granny's Kitchen
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md transition-all" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-secondary transition-colors duration-300" href="#">Pickle Types</a>
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-secondary transition-colors duration-300" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:block">
+<div class="relative">
+<input class="bg-surface-container-low border-none border-b border-outline-variant focus:ring-0 text-sm py-1 px-2 w-48" placeholder="Search heritage flavors..." type="text">
+</div>
+</div>
+<button class="wooden-button text-on-primary px-4 py-2 font-label-sm text-[10px] rounded hover:brightness-110 transition-all uppercase tracking-wider shadow-md">
+    Login / Register
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[80vh] flex items-center overflow-hidden px-gutter">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A sun-drenched traditional Kerala village kitchen featuring earthen clay pots, wooden rafters, and cast iron cookware." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAoUznVV69Rt-xN9qxSc4arytz9afq9JFELg_GPh93gOKmybLNyy7szzp-513qq5OK_mjJJkMuxMPlDd1RaYo2m6s7YDsUZwM2WjZwimJ1Ig1cBMcwo1xHwfIsMEKMU3OLS9snMBAPztbHA0yc5ujCgrobNCOPv6EDXF8X5zfw-TINBezZgQpVe0NGFK9d33_VkdvsTuSoDtIqmvqkeKjiIT71tJEsr7ypdSYGWtC3yawDO7yDheHrDgGb1yrjx5J2VRQ9os2vgYGI')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto w-full">
+<div class="max-w-2xl">
+<span class="text-secondary font-label-sm uppercase tracking-widest mb-4 block">Handmade in Kerala</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">
+                        A Taste of Heritage <br>in Every Jar.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg">
+                        Sun-dried spices, hand-pressed oils, and recipes passed down through five generations of the Tharavadu kitchen.
+                    </p>
+<div class="flex gap-4">
+<button class="wooden-button text-on-primary px-8 py-3 font-label-sm rounded-lg hover:brightness-110 transition-all shadow-lg flex items-center gap-2">
+                            SHOP THE COLLECTION
+                        </button>
+<button class="border-2 border-primary/20 wooden-button text-on-primary px-8 py-3 font-label-sm rounded-lg hover:brightness-110 transition-all">
+                            OUR STORY
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Pickles -->
+<section class="py-section-gap px-gutter max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Seasonal Batches</h2>
+<p class="text-on-surface-variant max-w-md">Our pickles are made in small batches following the lunar calendar and harvest cycles.</p>
+</div>
+<div class="flex gap-2">
+<button class="p-3 border border-outline-variant rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-3 border border-outline-variant rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Mango Card -->
+<div class="group">
+<div class="relative aspect-[3/4] mb-6 overflow-hidden bg-surface-container-low border border-outline-variant/30 shadow-lg rounded-xl flex flex-col">
+<div class="wooden-lid h-6 w-full z-20"></div>
+<div class="relative flex-grow overflow-hidden">
+<div class="glass-reflection absolute inset-0 z-10 opacity-70"></div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Kerala Mango Pickle jar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWoy6E2xRe7AhjbeP57yWOQCdN9-COZVx--DvCf71LBabeS6W8bk_Jer8CsCaARS9-8rRXs75RKGnLCitO--itCs2unMt3mm2-H42Meujo9tt-xXW7jnPnZ0LxUDjwCMmrAggBOIPbwokSB9fLeC3FlFCdWDF8Hk5oYdZ0IS0W_JW2ZnIqoaqUjBvE3cUQdOYTNEww10rr0ympoUaoivwqfoTqokz3ng4tsW_UTf4SBX_m-IohfQEAyk59xKr3MP_WYpiN6bLtvwE">
+</div>
+<div class="absolute top-10 right-4 z-20">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 font-label-sm rounded-full">FIRE</span>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Spicy Kaduku Mango</h3>
+<p class="text-on-surface-variant font-label-sm mb-4">Aged for 6 months</p>
+</div>
+<span class="text-secondary font-headline-md font-bold">₹349</span>
+</div>
+<button class="w-full wooden-button text-on-primary py-3 font-label-sm rounded-lg flex items-center justify-between px-4 mt-2">
+<span class="">ADD TO BASKET</span>
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<!-- Lime Card -->
+<div class="group mt-8 md:mt-12">
+<div class="relative aspect-[3/4] mb-6 overflow-hidden bg-surface-container-low border border-outline-variant/30 shadow-lg rounded-xl flex flex-col">
+<div class="wooden-lid h-6 w-full z-20"></div>
+<div class="relative flex-grow overflow-hidden">
+<div class="glass-reflection absolute inset-0 z-10 opacity-70"></div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Kerala Lime Pickle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi5MLb817MU-_fzJwss5vJfZsbpb3-eKjIUIXADRnDUkji_dIKsY7EOU2odN_wByPYSgtBFEM_8VzuiA2HTwA0d_4LtAej8O0V09fw-fVa_Ba90cOSrY7rL6YXzNI1PHVEwWw9plWoV8ccqoZ_wMOh1KHZ9Asyms0GOPK4uj8-MdV12K6NyHyoVLyDVgjqZ5iZ3L1bfG33eDHykd5L-CpMjVBslBSPtaabMu7Bw07Hwv-ijWJ8-RkIp5AZxJOkTJH46P-UFLXrsa4">
+</div>
+<div class="absolute top-10 right-4 z-20">
+<span class="bg-primary text-on-primary px-3 py-1 font-label-sm rounded-full">TANGY</span>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Salt-Cured Lime</h3>
+<p class="text-on-surface-variant font-label-sm mb-4">Slow sun-matured</p>
+</div>
+<span class="text-secondary font-headline-md font-bold">₹299</span>
+</div>
+<button class="w-full wooden-button text-on-primary py-3 font-label-sm rounded-lg flex items-center justify-between px-4 mt-2">
+<span class="">ADD TO BASKET</span>
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<!-- Garlic Card -->
+<div class="group">
+<div class="relative aspect-[3/4] mb-6 overflow-hidden bg-surface-container-low border border-outline-variant/30 shadow-lg rounded-xl flex flex-col">
+<div class="wooden-lid h-6 w-full z-20"></div>
+<div class="relative flex-grow overflow-hidden">
+<div class="glass-reflection absolute inset-0 z-10 opacity-70"></div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Garlic Pickle jar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3kW6a1GU6vo5FyavObnPkWspGJ7OVfqt13fHp0uUwbfBuuzNY0HiE7q9XiCi3-xCsgB3tBMtxTeyx5Zei2x_GckNPIKgNAUeP67ERhu8iGlp3qLAp6_ogLYhqZm1Q19-v_FDHYeJlRvmDVCrWHAU63mub8Ym3WIGMm1nrSMFtCnOY5NbyeqcdRIJjjZAo1_S2QdPKbkC7OQpzSiZR8oMvy_ZFSJ0FPXBmQWTHnp99k299XCls_rWLkAq-YGMglfUkOBjp3sQ__vg">
+</div>
+<div class="absolute top-10 right-4 z-20">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 font-label-sm rounded-full">BOLD</span>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Gingelly Garlic</h3>
+<p class="text-on-surface-variant font-label-sm mb-4">Five-spice infusion</p>
+</div>
+<span class="text-secondary font-headline-md font-bold">₹389</span>
+</div>
+<button class="w-full wooden-button text-on-primary py-3 font-label-sm rounded-lg flex items-center justify-between px-4 mt-2">
+<span class="">ADD TO BASKET</span>
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Granny's Secret Section -->
+<section class="bg-surface-container-low py-section-gap relative overflow-hidden">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="aspect-square bg-surface-container-high rounded-lg overflow-hidden border border-outline-variant p-6">
+<div class="w-full h-full border border-dashed border-outline-variant flex items-center justify-center relative">
+<img class="w-full h-full object-cover opacity-90 mix-blend-multiply" data-alt="Grandmother's hands mixing spices" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxVPY5K7q7N7EdswaoiSNjt25N8Ia8_tgqc3Puk5FlvLTaWo7FTl-AUvEzOIxQsx8QpXYkzgQOvOtkv9APzjOXhL7axNq-9tCUgKVf1NMTATI3qvL26sFOXqwhBrhzHD-wB8QSeahRVUrCn56BdmlhfKVr4mEKzZ4jfjWY08SBsgWsTyYGFN_OT_jNPKrFzsDdaKLX3zXyiQFuojsCi38iKOk3YF7B2t2zKaZdT08O-efUSg-mgn7PKmMlLaRvZi4hyfC1fvprdmY">
+<div class="absolute -bottom-8 -right-8 bg-background p-8 border border-outline-variant shadow-lg max-w-[200px]">
+<p class="font-headline-md text-secondary leading-tight italic">"The secret is the patience to wait for the sun."</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-8">
+<div>
+<span class="text-secondary font-label-sm uppercase tracking-widest block mb-4">The Process</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">Granny's Secret</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                            Every jar begins with hand-picked produce from our own orchards. We don't use chemical preservatives; instead, we rely on the natural alchemy of salt, oil, and the scorching Kerala sun.
+                        </p>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">sunny</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-1">Sun-Matured</h4>
+<p class="text-on-surface-variant text-sm">Cured for 21 days in direct sunlight in traditional Bharanis.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">eco</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-1">Wood-Pressed Oils</h4>
+<p class="text-on-surface-variant text-sm">We only use oils extracted in traditional wooden chucks.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-1">Ancestral Recipe</h4>
+<p class="text-on-surface-variant text-sm">The exact spice blend recorded in 1924 by Great Grandma.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Newsletter -->
+<section class="py-section-gap px-gutter text-center">
+<div class="max-w-2xl mx-auto space-y-8">
+<div class="w-16 h-px bg-secondary mx-auto"></div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Join the Family Table</h2>
+<p class="text-on-surface-variant">Get notified about new seasonal batches and heritage food stories from our kitchen.</p>
+<form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+<input class="flex-grow bg-transparent border-none border-b border-outline-variant focus:border-primary focus:ring-0 text-center md:text-left py-3" placeholder="Email Address" type="email">
+<button class="wooden-button text-on-primary px-8 py-3 font-label-sm rounded-lg hover:brightness-110 transition-all">SUBSCRIBE</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant mt-section-gap">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-gutter py-section-gap max-w-container-max mx-auto gap-8">
+<div class="text-center md:text-left">
+<div class="text-headline-md font-headline-md text-secondary mb-4">Granny's Kitchen</div>
+<p class="font-label-sm text-on-surface-variant max-w-xs">Preserving the soul of Kerala, one jar at a time. Authentic, artisanal, and always small-batch.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-secondary underline decoration-secondary/30 transition-all" href="#">Pickle Types</a>
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Contact Info</a>
+<a class="text-on-surface-variant font-medium font-body-md text-body-md hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Shipping Policy</a>
+</div>
+<div class="text-on-surface-variant font-label-sm text-center md:text-right">
+                Made with love in Kerala. © 2024 Granny's Kitchen
+                <div class="flex justify-center md:justify-end gap-4 mt-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary">face_nod</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary">insert_photo</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary">mail</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for product cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const btn = card.querySelector('button');
+                if(btn && btn.classList.contains('wooden-button')) {
+                    btn.style.transform = 'translateY(-2px)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const btn = card.querySelector('button');
+                if(btn && btn.classList.contains('wooden-button')) {
+                    btn.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Sticky header logic
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('-translate-y-full');
+            } else {
+                header.classList.remove('-translate-y-full');
+            }
+            lastScroll = currentScroll;
+            header.style.transition = 'transform 0.3s ease-in-out';
+        });
+    </script>
+</body></html>

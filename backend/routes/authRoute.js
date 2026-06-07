@@ -51,13 +51,35 @@ router.post("/login", (req, res) => {
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: "1h" }
             );
-            res.status(200).json({
+            res.cookie("access_token", token, {
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax",
+                maxAge: 60 * 60 * 1000
+            });
+
+            return res.status(200).json({
                 message: "Login successful",
-                ok: true,
-                user: { id: user.ID, username: user.USERNAME, email: user.EMAIL },
-                token: token
+                ok: true
             });
         });
     });
+});
+router.post("/me", authencate, (req, res) => {
+    try {
+        res.status(200).json({
+            ok: true,
+            user: {
+                id: req.user.id,
+                username: req.user.username,
+                email: req.user.email
+            }
+        });
+    } catch (err) {
+        res.status(500).json({
+            ok: false,
+            message: "Server error"
+        });
+    }
 });
 module.exports = router;
