@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const authencate = (req, res, next) => {
     const token = req.cookies.access_token;
-
+    console.log("token:", token);
     if (!token) {
         return res.status(401).json({ message: "Unauthorized access", ok: false });
     }

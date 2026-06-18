@@ -1,0 +1,445 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>My Kitchen Pantry | Granny's Kitchen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#bb2927",
+                    "on-error": "#ffffff",
+                    "background": "#fff8ef",
+                    "tertiary-fixed-dim": "#ffb4ac",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#f8f0e1",
+                    "surface-dim": "#e1d9cb",
+                    "secondary-fixed-dim": "#ffb68c",
+                    "on-background": "#1e1b13",
+                    "primary-fixed": "#c8edb6",
+                    "secondary-fixed": "#ffdbc9",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e9e2d3",
+                    "secondary": "#934b19",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#92030f",
+                    "tertiary": "#980a13",
+                    "primary-fixed-dim": "#acd19c",
+                    "outline": "#73796e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e9e2d3",
+                    "primary-container": "#4b6b3f",
+                    "on-primary-container": "#c5eab3",
+                    "inverse-primary": "#acd19c",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#345329",
+                    "on-tertiary-container": "#ffd6d1",
+                    "on-primary": "#ffffff",
+                    "surface": "#fff8ef",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#47673b",
+                    "tertiary-fixed": "#ffdad6",
+                    "on-tertiary-fixed": "#410003",
+                    "surface-container-high": "#efe7d9",
+                    "on-secondary-container": "#783603",
+                    "on-surface": "#1e1b13",
+                    "outline-variant": "#c3c8bc",
+                    "on-primary-fixed": "#042101",
+                    "on-primary-fixed-variant": "#304e25",
+                    "on-secondary-fixed-variant": "#753401",
+                    "surface-container-low": "#fbf3e4",
+                    "on-surface-variant": "#43483f",
+                    "secondary-container": "#ffa26a",
+                    "inverse-surface": "#343026",
+                    "surface-bright": "#fff8ef",
+                    "surface-container": "#f5edde",
+                    "on-secondary-fixed": "#321200"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "section-gap": "80px",
+                    "margin-mobile": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Libre Caslon Text"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Libre Caslon Text"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Libre Caslon Text"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fff8ef;
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+            background-attachment: fixed;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url('https://www.transparenttextures.com/patterns/felt.png');
+        }
+        .clay-border { border: 1px solid #c3c8bc; }
+        .jute-shadow { box-shadow: 0 4px 20px -5px rgba(139, 69, 19, 0.1); }
+        .active-nav-shadow { box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* Jar Reflections and Lids */
+        .jar-container { position: relative; }
+        .jar-lid {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 25px;
+            background: linear-gradient(to bottom, #5D2E0B, #3E1F07);
+            border-radius: 4px 4px 2px 2px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .jar-lid::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 5%; width: 90%; height: 2px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 1px;
+        }
+        .glass-reflection {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.3) 100%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Wooden Board Buttons */
+        .wooden-board-btn {
+            background-color: #8B4513;
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            color: #fff8ef;
+            padding: 10px 24px;
+            border-radius: 4px;
+            position: relative;
+            box-shadow: 2px 3px 0px #5D2E0B;
+            border: 1px solid #5D2E0B;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .wooden-board-btn:active {
+            transform: translateY(2px) translateX(1px);
+            box-shadow: 0px 0px 0px #5D2E0B;
+        }
+        .wooden-board-btn::before, .wooden-board-btn::after {
+            content: '•';
+            position: absolute;
+            font-size: 8px;
+            color: rgba(0,0,0,0.4);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .wooden-board-btn::before { left: 6px; }
+        .wooden-board-btn::after { right: 6px; }
+        
+        .crack {
+            position: absolute;
+            background: rgba(0,0,0,0.2);
+            height: 1px;
+        }
+        .crack-1 { width: 15px; top: 20%; left: 10%; transform: rotate(5deg); }
+        .crack-2 { width: 10px; bottom: 30%; right: 15%; transform: rotate(-3deg); }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<div class="grain-overlay"></div>
+<!-- SideNavBar Anchor -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant p-4 gap-base z-50">
+<div class="mb-8 px-4">
+<h1 class="text-headline-md font-headline-md text-primary">My Kitchen Pantry</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Traditional Flavors</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-full px-4 py-2 active-nav-shadow translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-highest rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-sm text-label-sm">Order History</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-highest rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm">Favorite Pickles</span>
+</a>
+</nav>
+<div class="mt-auto p-4 clay-border bg-surface-container rounded-lg">
+<p class="font-label-sm text-label-sm text-primary mb-2">Member Since</p>
+<p class="font-headline-md text-headline-md text-secondary">Aug 2023</p>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 min-h-screen px-margin-mobile md:px-gutter py-8 max-w-container-max mx-auto">
+<!-- Header Section -->
+<header class="flex justify-between items-center mb-12 border-b border-outline-variant pb-6">
+<div class="flex items-center gap-4">
+<img alt="Cart Logo" class="w-12 h-12 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLsTxBNI7J0wEHZenHrwmKTO5MQlNN26nz-UyrH1pc3Mh86ZRSTRMqGST7smhvp5arkzsx-RLKQhV165oh3gCXN6Y9x5K-eRWe65iTvugWxi8Xhe_eamm9LJ1C1hPXaV6xpL-vfSnqMS5XmpN9nUJORX8JIkceoN8tGy2UmBqagfDaEClN32YBQTIzslrig0OGulT-Cv0Y4lswU4X7A75lz_-FJGmwZdjliOcybGKb8Y9xQRJlYtYh_1AJs">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Namaste, Aditi</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mt-1">Your Heritage Pantry</h2>
+</div>
+</div>
+<div class="hidden lg:block text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Next Delivery</p>
+<p class="font-headline-md text-headline-md text-tertiary">14th Sept, 2024</p>
+</div>
+</header>
+<!-- Stats Grid (Curing Status) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-section-gap">
+<div class="bg-surface-container-high p-6 clay-border rounded-xl relative overflow-hidden jute-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary text-4xl">timer</span>
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full">Active</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Sun-Drying Stage</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Your Batch #402 (Mango Avakkai) is currently resting under the Kerala sun.</p>
+<div class="mt-6 w-full bg-outline-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<p class="font-label-sm text-label-sm mt-2 text-primary">65% Processed</p>
+</div>
+<div class="bg-surface-container-high p-6 clay-border rounded-xl jute-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary text-4xl">local_shipping</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full">In Transit</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Pantry Restock</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Ginger &amp; Garlic Pickle (Large Jar) has left the kitchen in Alleppey.</p>
+<button class="mt-4 text-secondary font-label-sm text-label-sm flex items-center gap-1 hover:underline">Track Kooda <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+<div class="bg-surface-container-high p-6 clay-border rounded-xl jute-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-tertiary text-4xl">loyalty</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Spiciness Level</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">You prefer <span class="text-tertiary font-bold">Fire</span>. Most of your pantry matches this profile.</p>
+<div class="flex gap-2 mt-4">
+<span class="w-4 h-4 rounded-full bg-tertiary"></span>
+<span class="w-4 h-4 rounded-full bg-tertiary"></span>
+<span class="w-4 h-4 rounded-full bg-tertiary"></span>
+<span class="w-4 h-4 rounded-full bg-outline-variant"></span>
+</div>
+</div>
+</section>
+<!-- Current Pantry (Recent Orders) -->
+<section class="mb-section-gap">
+<div class="flex items-center gap-4 mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">Current Pantry</h2>
+<div class="flex-grow h-px bg-outline-variant opacity-30"></div>
+<button class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary">View All History</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Jar Card 1 -->
+<div class="group clay-border bg-white rounded-lg overflow-hidden jute-shadow transition-transform hover:-translate-y-1">
+<div class="h-48 overflow-hidden bg-surface-variant relative jar-container">
+<div class="jar-lid"></div>
+<div class="glass-reflection"></div>
+<img alt="Mango Pickle" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTxGUFPCBmDyinIF-zeM3zJ6N-1S-AtlzPV6MySuLw9gbRrgOWYOK_MxlC6ws4V7meb2KHoaaCgXEhA0bUMM_FsQektxGLA8ONO0W-2glnwR51v94wMCVNbn1Bkr4osdEoojpbfuTDcDI0liDJiaAAVneVOmaLBRF6D9obnCMsjTdweJgh578qivOWhMCqTM-rGhV7wBZnfnWbvfUVAcsj__acyPLorUKg20zu1sOgizSmWQA5PhnjjtubZtBmT51cAvS7-64HrH8">
+<div class="absolute top-8 right-2 z-20">
+<span class="bg-tertiary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">Fire</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight">Spicy Cut Mango</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Ordered: 12 Aug</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-secondary font-bold">₹349</span>
+<button class="text-primary hover:bg-primary-container hover:text-on-primary-container p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Jar Card 2 -->
+<div class="group clay-border bg-white rounded-lg overflow-hidden jute-shadow transition-transform hover:-translate-y-1">
+<div class="h-48 overflow-hidden bg-surface-variant relative jar-container">
+<div class="jar-lid"></div>
+<div class="glass-reflection"></div>
+<img alt="Lime Pickle" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5d7dwL_nw6G-l9vYiTZ7Gxdq9aZRIYQWRY-w7Wz05ATzj4zyJ3iLzq8s8hbQe9XKSj6mgmvHuKrV3HRQ5PA5ljT8jQ3Idc4pRgqaQmSaL-dXHu3NsWL1Ms8Go6jD64za7TefCv66ZT7-nAPeUh6Tr9ILIbqN9ao34ZYNPU4smRycbuqg-1F1lldGMswTuOPNG7X57DBDKYR99I2TBeP8uqzC1Z4PokokNA6s2YX5DD2GtLX-5FV6pPL1uB11ArPrKda-SvI-KzDQ">
+<div class="absolute top-8 right-2 z-20">
+<span class="bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">Mild</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight">Sun-Cured Lime</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Ordered: 05 Aug</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-secondary font-bold">₹299</span>
+<button class="text-primary hover:bg-primary-container hover:text-on-primary-container p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Jar Card 3 -->
+<div class="group clay-border bg-white rounded-lg overflow-hidden jute-shadow transition-transform hover:-translate-y-1">
+<div class="h-48 overflow-hidden bg-surface-variant relative jar-container">
+<div class="jar-lid"></div>
+<div class="glass-reflection"></div>
+<img alt="Ginger Garlic" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQYeGlRHDWt0li-nl5CG4vKd-kw9RhsIhkE_XK8tiJFmJU6SOOEKvpBCnqxIP3Jn9KLaMQU2_Zuv2-sKO8EW4OzL2MZhOBFmrn2Wb3PAQQcXttHEpdPvGSNv8H-6HOq2BPgLfFA46o_HkCpzLT63Tar_Dk20iE6PUEDK7zsxIUbxvg6IdXi8aaxIW8qz-HzzhutNw-8H_YCmPEnN19xb2e9hqIpKP4vtjqqSR4V8S8sKW39g86ca2h0pq_f7bXPL00Q8P76u3-g8g">
+<div class="absolute top-8 right-2 z-20">
+<span class="bg-secondary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">Savory</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight">Ginger &amp; Garlic</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Ordered: 28 July</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-secondary font-bold">₹420</span>
+<button class="text-primary hover:bg-primary-container hover:text-on-primary-container p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State Slot -->
+<div class="flex flex-col items-center justify-center p-8 clay-border border-dashed bg-transparent rounded-lg text-center opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-4xl mb-4">add_circle</span>
+<p class="font-headline-md text-headline-md text-on-surface">New Discovery</p>
+<p class="font-label-sm text-label-sm">Browse Granny's Secret Stash</p>
+</div>
+</div>
+</section>
+<!-- Granny's Recommendations (Bento Style) -->
+<section class="mb-section-gap">
+<h2 class="font-headline-md text-headline-md text-primary mb-8">Granny's Recommendations</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Feature -->
+<div class="md:col-span-2 relative h-80 rounded-xl overflow-hidden group">
+<img alt="Heritage Spices" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2WN8dlDu4XoIgeK1FXUozc1XVr6qua4Wktl9RGysgRUTTV7ReEWFIuRaQu8ru8kJbIdjX8oag3VYccKCuqW83Dd8CulL2kxkj8L8HhCmRlB3s1RCYKRDKtYdO9PuqMqLpxGaf3qnO5nU9XbYBRGuJNEVnLJd1cHTJ2OyFKTL85vgkGx4eUgWNsVNmdvilIRGg9Y7O-k_GrroIz0kPEuDj2BDzqNao9pbR929hSm-mhWo217xhw8PVAwDO0G9SmgMhGnstesgOvyw">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+<span class="text-primary-fixed font-label-sm text-label-sm mb-2">LIMITED BATCH</span>
+<h3 class="text-white font-display-lg-mobile md:text-display-lg-mobile leading-none">Vadu Mango (Baby Mango)</h3>
+<p class="text-white/80 font-body-md text-body-md mt-2 max-w-md">Our tender baby mangoes are picked before dawn and cured with hand-ground bird's eye chili.</p>
+<button class="mt-6 self-start wooden-board-btn font-label-sm text-label-sm flex items-center gap-2">
+<span class="crack crack-1"></span><span class="crack crack-2"></span>
+                            Add to Basket <span class="material-symbols-outlined text-sm">shopping_basket</span>
+</button>
+</div>
+</div>
+<!-- Smaller Recommendation 1 -->
+<div class="bg-tertiary-container text-on-tertiary-container p-6 rounded-xl flex flex-col justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-3xl mb-4">auto_awesome</span>
+<h3 class="font-headline-md text-headline-md">Sweet Dates &amp; Tamarind</h3>
+<p class="font-label-sm text-label-sm mt-2 opacity-80">A perfect companion for your afternoon snacks.</p>
+</div>
+<button class="relative z-10 mt-8 w-fit wooden-board-btn font-label-sm text-label-sm">
+<span class="crack crack-1"></span><span class="crack crack-2"></span>
+                        Discover Flavor
+                    </button>
+<!-- Abstract Background Pattern -->
+<div class="absolute -bottom-10 -right-10 opacity-10">
+<span class="material-symbols-outlined text-[150px]">restaurant</span>
+</div>
+</div>
+<!-- Smaller Recommendation 2 -->
+<div class="bg-surface-container-highest p-6 clay-border rounded-xl flex flex-col items-center text-center group">
+<div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white jute-shadow jar-container">
+<div class="jar-lid !w-24 !top-[-10px]"></div>
+<div class="glass-reflection"></div>
+<img alt="Beetroot Pickle" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhcefUTMc6HG895bA94H-yeW-xOqvifEgtf00fXaGxL4Y1KJRV1V0kzX_pNPPqJMd2E1vOHKiWdpPMKLikrfhTOtbVDk5mJI7GF8Jz771-EKsdsGDT3B_c51h-knZhtoWDQLPpG105qd6Rf9vOdCWZDe71mVEKwJlkAcEeBce1JiEkwY9SC7gyKxP0svnasouPTA-6jARvmn5_OXsEIBNfFFwNSPhMNiuNUZcvH5ogX59b8BwrE8BPFmKrhPlnBGuuzl6aX9h2OvI">
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Earthy Beetroot</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2 px-4">Based on your love for Ginger Garlic, this is your next favorite.</p>
+<button class="mt-6 text-primary font-bold hover:underline">Add for ₹199</button>
+</div>
+<!-- Gift Suggestion -->
+<div class="md:col-span-2 bg-secondary text-white p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+<div class="flex-1">
+<h3 class="font-display-lg-mobile text-display-lg-mobile mb-4">Send a Jute Basket</h3>
+<p class="font-body-md text-body-md opacity-90 mb-6">Gift the taste of Kerala. We'll curate 3 jars in a hand-woven Kooda with a handwritten note.</p>
+<button class="wooden-board-btn font-label-sm text-label-sm !bg-secondary-container !text-on-secondary-container !border-on-secondary-container !shadow-[#783603]">
+<span class="crack crack-1"></span><span class="crack crack-2"></span>
+                            Curate a Gift
+                        </button>
+</div>
+<div class="w-full md:w-1/3 aspect-square bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+<span class="material-symbols-outlined text-white text-[100px]" style="font-variation-settings: 'FILL' 1;">card_giftcard</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Anchor -->
+<footer class="bg-surface-container-highest border-t border-outline-variant py-section-gap px-gutter w-full z-10">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+<div class="max-w-sm">
+<h2 class="text-headline-md font-headline-md text-secondary mb-4">Granny's Kitchen</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Preserving the soul of Kerala, one jar at a time. Our pickles are hand-crafted by mothers and grandmothers in small, seasonal batches.</p>
+</div>
+<div class="grid grid-cols-2 gap-x-12 gap-y-4">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Pickle Types</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Contact Info</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-all" href="#">Shipping Policy</a>
+</div>
+<div class="w-full md:w-auto">
+<p class="font-label-sm text-label-sm text-on-surface mb-2">Made with love in Kerala. © 2024 Granny's Kitchen</p>
+<div class="flex gap-4 mt-4 opacity-60">
+<span class="material-symbols-outlined">face_nod</span>
+<span class="material-symbols-outlined">camera_indoor</span>
+<span class="material-symbols-outlined">mail</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Navigation (Visible on mobile only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant flex justify-around items-center py-3 z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px]">History</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">shopping_basket</span>
+<span class="text-[10px]">Pantry</span>
+</a>
+</div>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center jute-shadow hover:scale-110 transition-transform active:scale-95 group z-50">
+<span class="material-symbols-outlined">add</span>
+<span class="absolute right-16 bg-white text-primary px-4 py-2 rounded-full clay-border text-label-sm font-label-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity jute-shadow">Shop Jars</span>
+</button>
+<script>
+        console.log("Granny's Kitchen UI Initialized: Rustic Kerala Aesthetic");
+    </script>
+</body></html>

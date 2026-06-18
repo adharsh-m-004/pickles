@@ -16,7 +16,7 @@ export default function LoginPage() {
         setLoading(true)
 
         try {
-            const apiUrl = 'http://localhost:3001/api/auth/login'
+            const apiUrl = '/api/auth/login'
             const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 credentials: "include",

@@ -1,0 +1,271 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Login - Granny's Kitchen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#bb2927",
+                    "on-error": "#ffffff",
+                    "background": "#fff8ef",
+                    "tertiary-fixed-dim": "#ffb4ac",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#f8f0e1",
+                    "surface-dim": "#e1d9cb",
+                    "secondary-fixed-dim": "#ffb68c",
+                    "on-background": "#1e1b13",
+                    "primary-fixed": "#c8edb6",
+                    "secondary-fixed": "#ffdbc9",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e9e2d3",
+                    "secondary": "#934b19",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#92030f",
+                    "tertiary": "#980a13",
+                    "primary-fixed-dim": "#acd19c",
+                    "outline": "#73796e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e9e2d3",
+                    "primary-container": "#4b6b3f",
+                    "on-primary-container": "#c5eab3",
+                    "inverse-primary": "#acd19c",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#345329",
+                    "on-tertiary-container": "#ffd6d1",
+                    "on-primary": "#ffffff",
+                    "surface": "#fff8ef",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#47673b",
+                    "tertiary-fixed": "#ffdad6",
+                    "on-tertiary-fixed": "#410003",
+                    "surface-container-high": "#efe7d9",
+                    "on-secondary-container": "#783603",
+                    "on-surface": "#1e1b13",
+                    "outline-variant": "#c3c8bc",
+                    "on-primary-fixed": "#042101",
+                    "on-primary-fixed-variant": "#304e25",
+                    "on-secondary-fixed-variant": "#753401",
+                    "surface-container-low": "#fbf3e4",
+                    "on-surface-variant": "#43483f",
+                    "secondary-container": "#ffa26a",
+                    "inverse-surface": "#343026",
+                    "surface-bright": "#fff8ef",
+                    "surface-container": "#f5edde",
+                    "on-secondary-fixed": "#321200"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "section-gap": "80px",
+                    "margin-mobile": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Libre Caslon Text"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Libre Caslon Text"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Libre Caslon Text"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .paper-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+            opacity: 0.03;
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+        }
+        .clay-border {
+            border: 1px solid rgba(147, 75, 25, 0.2);
+        }
+        .auth-card-shadow {
+            box-shadow: 0 10px 30px -15px rgba(139, 69, 19, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<div class="paper-texture"></div>
+<!-- TopNavBar -->
+<header class="bg-background border-b border-outline-variant docked full-width top-0 z-50">
+<nav class="flex justify-between items-center w-full px-gutter py-4 max-w-container-max mx-auto">
+<a class="text-headline-md font-headline-md text-secondary dark:text-secondary-fixed" href="/">Granny's Kitchen</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-300" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-300" href="#">Pickle Types</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-300" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-primary hover:text-secondary transition-colors duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">shopping_basket</span>
+</button>
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="min-h-screen flex items-center justify-center pt-20 pb-20 px-margin-mobile">
+<div class="max-w-container-max w-full grid grid-cols-1 md:grid-cols-2 bg-surface-container-lowest rounded-xl overflow-hidden auth-card-shadow clay-border">
+<!-- Left Side: Illustration / Visual -->
+<div class="relative hidden md:block h-full min-h-[600px] overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A cinematic, high-quality photograph of a traditional Kerala Bharani clay pot resting on a rustic wooden table in a sun-drenched heritage kitchen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoCn-eUz3P5Hc4Nppf9zwxrUA-cbXlfkU7ExL2R-JY-mcF_KLa4sPr2NWEF0TxXcOL_ojH1Q1ChWCYvj0bwHDLPAqLf6aUl43TpEGZLuM0JKaix-SJ2WgANuiS9wVDfOjW207Jhi24vYN8Fm7rtUZzaIvd5RLayLgr2Jbu2lx6XtU6mqgdferqW10Z1E9LqBRhWAx2IvkgIX4t9hvhwvfZm887RiuuoYdAQTQxcQROtaSS1Dvo2agDz1-fE1EZ8U8K5AAHWnezE40">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
+<div class="absolute bottom-12 left-12 right-12 text-on-primary">
+<h2 class="font-headline-md text-display-lg-mobile md:text-display-lg mb-4">The Secret of the Sun</h2>
+<p class="font-body-lg text-primary-fixed opacity-90 max-w-md">Every jar is a story of three months, seven spices, and a grandmother's touch.</p>
+</div>
+</div>
+<!-- Right Side: Forms -->
+<div class="p-8 md:p-16 flex flex-col justify-center bg-surface-container-low">
+<div id="auth-container">
+<!-- Login Form -->
+<div class="transition-opacity duration-300" id="login-form">
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mb-2 block">Welcome Back</span>
+<h1 class="font-headline-md text-display-lg-mobile text-primary mb-8">Enter the Pantry</h1>
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block" for="email">Email Address</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" id="email" placeholder="you@heritage.com" type="email">
+</div>
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block" for="password">Secret Phrase</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" id="password" placeholder="••••••••" type="password">
+</div>
+<div class="flex items-center justify-between py-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded-sm border-outline text-primary focus:ring-primary h-4 w-4" type="checkbox">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Remember me</span>
+</label>
+<a class="text-label-sm font-label-sm text-secondary hover:underline decoration-secondary/30" href="#">Lost the recipe?</a>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 px-8 rounded-full font-label-sm hover:bg-on-primary-fixed-variant transition-all transform active:scale-95 shadow-lg shadow-primary/20" type="submit">
+                                Open the Kitchen
+                            </button>
+</form>
+<div class="mt-12 pt-8 border-t border-outline-variant text-center">
+<p class="text-body-md text-on-surface-variant mb-4">New to our kitchen?</p>
+<button class="text-label-sm font-label-sm text-secondary hover:text-on-secondary-fixed-variant flex items-center gap-2 mx-auto group" onclick="toggleAuth('signup')">
+                                Create an Account
+                                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Sign Up Form (Hidden by default) -->
+<div class="hidden transition-opacity duration-300" id="signup-form">
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mb-2 block">Join the Family</span>
+<h1 class="font-headline-md text-display-lg-mobile text-primary mb-8">Start Your Journey</h1>
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block">First Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" type="text">
+</div>
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block">Last Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" type="text">
+</div>
+</div>
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block">Email Address</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" type="email">
+</div>
+<div>
+<label class="text-label-sm font-label-sm text-on-surface-variant mb-2 block">Choose a Password</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 font-body-md text-on-surface" type="password">
+</div>
+<p class="text-[10px] text-on-surface-variant opacity-70 italic">By joining, you agree to our heritage standards and shipping policies.</p>
+<button class="w-full bg-primary text-on-primary py-4 px-8 rounded-full font-label-sm hover:bg-on-primary-fixed-variant transition-all transform active:scale-95 shadow-lg shadow-primary/20" type="submit">
+                                Join Granny's Kitchen
+                            </button>
+</form>
+<div class="mt-12 pt-8 border-t border-outline-variant text-center">
+<p class="text-body-md text-on-surface-variant mb-4">Already have a recipe book?</p>
+<button class="text-label-sm font-label-sm text-secondary hover:text-on-secondary-fixed-variant flex items-center gap-2 mx-auto group" onclick="toggleAuth('login')">
+<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                                Back to Login
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant full-width bottom-0">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-gutter py-section-gap max-w-container-max mx-auto gap-8">
+<div class="flex flex-col gap-4 text-center md:text-left">
+<span class="text-headline-md font-headline-md text-secondary">Granny's Kitchen</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Made with love in Kerala. © 2024 Granny's Kitchen</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-opacity duration-200" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-opacity duration-200" href="#">Pickle Types</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-opacity duration-200" href="#">Contact Info</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary underline decoration-tertiary/30 transition-opacity duration-200" href="#">Shipping Policy</a>
+</div>
+</div>
+</footer>
+<script>
+        function toggleAuth(type) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            
+            if (type === 'signup') {
+                loginForm.classList.add('opacity-0');
+                setTimeout(() => {
+                    loginForm.classList.add('hidden');
+                    signupForm.classList.remove('hidden');
+                    setTimeout(() => signupForm.classList.remove('opacity-0'), 10);
+                }, 300);
+            } else {
+                signupForm.classList.add('opacity-0');
+                setTimeout(() => {
+                    signupForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+                    setTimeout(() => loginForm.classList.remove('opacity-0'), 10);
+                }, 300);
+            }
+        }
+
+        // Atmospheric effect: Soft mouse follow on primary button
+        document.addEventListener('mousemove', (e) => {
+            const buttons = document.querySelectorAll('button[type="submit"]');
+            buttons.forEach(btn => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                btn.style.setProperty('--x', `${x}px`);
+                btn.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>
