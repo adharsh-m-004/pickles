@@ -54,12 +54,15 @@ router.post("/login", (req, res) => {
             res.cookie("access_token", token, {
                 httpOnly: true,
                 secure: false,
-                sameSite: "lax",
+                sameSite: "lax",  // ✅ changed from "none"
                 maxAge: 60 * 60 * 1000
             });
 
             return res.status(200).json({
                 message: "Login successful",
+                tokens: {
+                    access_token: token
+                },
                 ok: true
             });
         });
@@ -81,5 +84,14 @@ router.post("/me", authencate, (req, res) => {
             message: "Server error"
         });
     }
+});
+
+router.post("/logout", (req, res) => {
+    res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax"
+    });
+    res.status(200).json({ message: "Logged out successfully", ok: true });
 });
 module.exports = router;
