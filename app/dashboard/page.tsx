@@ -67,7 +67,7 @@ export default function Dashboard() {
 
     const fetchCart = async () => {
         try {
-            const response = await fetch('/api/cart/my-cart', {  // ✅ fixed
+            const response = await fetch('/api/cart/my-cart', {  // ✅ no ?userId= needed
                 credentials: 'include',
             })
             if (!response.ok) throw new Error('Failed to fetch cart')
@@ -79,12 +79,16 @@ export default function Dashboard() {
     }
 
     const addCart = async (productId: number, qty: number) => {
+        if (!user) {
+            router.push('/login')
+            return
+        }
         try {
             const response = await fetch('/api/cart/cart', {  // ✅ fixed
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pid: productId, qty }),
+                body: JSON.stringify({ id: user.id, pid: productId, qty }),
             })
             if (!response.ok) throw new Error('Failed to add to cart')
             fetchCart()

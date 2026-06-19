@@ -1,15 +1,16 @@
-const authencate = require("../middleware/authMiddle");
 const express = require("express");
 const router = express.Router();
 const db = require("../databse");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authencate = require("../middleware/authMiddle");
+const validate = require("../middleware/validate");
+const { registerValidator, loginValidator } = require("../middleware/validators");
 
-router.post("/register", (req, res) => {
+// validators run first, then validate checks for errors, then your handler
+router.post("/register", registerValidator, validate, (req, res) => {
     const { username, password, email } = req.body;
-    if (!username || !password || !email) {
-        return res.status(400).json({ message: "All fields are required", ok: false });
-    }
+
     const saltRounds = 10;
     bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
@@ -18,33 +19,34 @@ router.post("/register", (req, res) => {
         const sql = "INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) VALUES (?,?,?)";
         db.query(sql, [username, hash, email], (err, result) => {
             if (err) {
-                return res.status(500).json({ message: "Database error", error: err.message, ok: false });
+                if (err.code === "ER_DUP_ENTRY") {
+                    return res.status(409).json({ message: "Email already registered", ok: false });
+                }
+                return res.status(500).json({ message: "Database error", ok: false });
             }
-            res.status(200).json({ message: "Success", ok: true });
+            res.status(201).json({ message: "User registered successfully", ok: true });
         });
     });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", loginValidator, validate, (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required", ok: false });
-    }
+
     const sql = "SELECT * FROM USERS WHERE EMAIL = ?";
     db.query(sql, [email], (err, results) => {
         if (err) {
-            return res.status(500).json({ message: "Error 500:Database error", ok: false });
+            return res.status(500).json({ message: "Database error", ok: false });
         }
         if (results.length === 0) {
-            return res.status(401).json({ message: "Error 401:Invalid credentials", ok: false });
+            return res.status(401).json({ message: "Invalid credentials", ok: false });
         }
         const user = results[0];
         bcrypt.compare(password, user.PASSWORD, (err, isMatch) => {
             if (err) {
-                return res.status(500).json({ message: "Error 500:Authentication error", ok: false });
+                return res.status(500).json({ message: "Authentication error", ok: false });
             }
             if (!isMatch) {
-                return res.status(401).json({ message: "Error 401:Invalid credentials", ok: false });
+                return res.status(401).json({ message: "Invalid credentials", ok: false });
             }
             const token = jwt.sign(
                 { id: user.ID, username: user.USERNAME, email: user.EMAIL },
@@ -54,44 +56,24 @@ router.post("/login", (req, res) => {
             res.cookie("access_token", token, {
                 httpOnly: true,
                 secure: false,
-                sameSite: "lax",  // ✅ changed from "none"
+                sameSite: "lax",
                 maxAge: 60 * 60 * 1000
             });
-
-            return res.status(200).json({
-                message: "Login successful",
-                tokens: {
-                    access_token: token
-                },
-                ok: true
-            });
+            return res.status(200).json({ message: "Login successful", ok: true });
         });
     });
 });
+
 router.post("/me", authencate, (req, res) => {
-    try {
-        res.status(200).json({
-            ok: true,
-            user: {
-                id: req.user.id,
-                username: req.user.username,
-                email: req.user.email
-            }
-        });
-    } catch (err) {
-        res.status(500).json({
-            ok: false,
-            message: "Server error"
-        });
-    }
+    res.status(200).json({
+        ok: true,
+        user: { id: req.user.id, username: req.user.username, email: req.user.email }
+    });
 });
 
 router.post("/logout", (req, res) => {
-    res.clearCookie("access_token", {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax"
-    });
+    res.clearCookie("access_token", { httpOnly: true, secure: false, sameSite: "lax" });
     res.status(200).json({ message: "Logged out successfully", ok: true });
 });
+
 module.exports = router;
