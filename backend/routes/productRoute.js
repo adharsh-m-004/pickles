@@ -13,3 +13,4 @@ router.get("/dashboard", authencate, (req, res) => {
     });
 });
 
+module.exports = router;
