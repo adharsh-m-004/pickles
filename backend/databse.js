@@ -5,8 +5,8 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') }
 const db = mysql.createPool({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
-    password: process.env.MYSQL_ROOT_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
