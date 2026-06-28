@@ -1,13 +1,5 @@
-const express = require("express");
 const mysql = require("mysql2");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
-const app = express();
-const port = process.env.PORT || 3001;
-
-app.use(cors());
-app.use(express.json());
 
 // Database connection pool
 const db = mysql.createPool({
