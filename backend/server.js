@@ -10,7 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const logger = require("./config/logger");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.BACKEND_PORT || 3001;
 
 // ─── Security headers ─────────────────────────────────────────────────────────
 app.use(helmet());
