@@ -71,6 +71,6 @@ app.use("/api/cart", cartRoutes);
 // ─── Centralised error handler (must be last) ─────────────────────────────────
 app.use(errorHandler);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     logger.info(`Server running on port ${port}`);
 });
