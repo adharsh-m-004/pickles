@@ -10,7 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const logger = require("./config/logger");
 
 const app = express();
-const port = process.env.BACKEND_PORT || 3001;
+const port = process.env.PORT;
 
 // ─── Security headers ─────────────────────────────────────────────────────────
 app.use(helmet());
@@ -40,7 +40,7 @@ app.use(globalLimiter);
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
 };
 app.use(cookieparser());
