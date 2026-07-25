@@ -26,13 +26,11 @@ export default function CartPage() {
                 credentials: 'include',
             })
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch cart')
-            }
-
             const result = await response.json()
 
-            setCart(result.data || [])
+            if (response.ok) {
+                setCart(result.data || [])
+            }
         } catch (err) {
             console.error(err)
         } finally {
@@ -41,20 +39,15 @@ export default function CartPage() {
     }
 
     const increaseQty = async (pid: number) => {
-        const item = cart.find((x) => x.pid === pid)
-
-        if (!item) return
-
         try {
-            const response = await fetch('/api/cart/cart', {
-                method: 'POST',
+            const response = await fetch(`/api/cart/cart/${pid}`, {
+                method: 'PATCH',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    pid,
-                    qty: 1,
+                    action: 'increase',
                 }),
             })
 
@@ -75,7 +68,7 @@ export default function CartPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    qty: -1,
+                    action: 'decrease',
                 }),
             })
 
@@ -104,7 +97,7 @@ export default function CartPage() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="min-h-screen flex justify-center items-center">
                 Loading...
             </div>
         )
@@ -115,44 +108,39 @@ export default function CartPage() {
     const totalQuantity = cart.reduce((sum, item) => sum + item.qty, 0)
 
     const totalPrice = cart.reduce(
-        (sum, item) => sum + item.qty * item.price,
+        (sum, item) => sum + item.price * item.qty,
         0
     )
 
     return (
-        <div className="min-h-screen bg-gray-100">
-
-            <div className="max-w-6xl mx-auto py-10 px-6">
+        <div className="min-h-screen bg-gray-100 py-10">
+            <div className="max-w-6xl mx-auto px-6">
 
                 <div className="flex justify-between items-center mb-8">
-
-                    <h1 className="text-4xl font-bold">
-                        🛒 My Cart
-                    </h1>
+                    <h1 className="text-4xl font-bold">🛒 My Cart</h1>
 
                     <button
                         onClick={() => router.push('/dashboard')}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+                        className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
                     >
                         Continue Shopping
                     </button>
-
                 </div>
 
                 {cart.length === 0 ? (
-                    <div className="bg-white rounded-xl shadow p-16 text-center">
+                    <div className="bg-white rounded-xl shadow p-12 text-center">
 
-                        <h2 className="text-2xl font-semibold">
+                        <h2 className="text-2xl font-bold">
                             Your cart is empty
                         </h2>
 
-                        <p className="text-gray-500 mt-3">
-                            Add some delicious pickles to get started.
+                        <p className="mt-3 text-gray-500">
+                            Add some delicious pickles.
                         </p>
 
                         <button
                             onClick={() => router.push('/dashboard')}
-                            className="mt-8 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
+                            className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
                         >
                             Browse Products
                         </button>
@@ -167,7 +155,7 @@ export default function CartPage() {
 
                                 <div
                                     key={item.pid}
-                                    className="bg-white rounded-xl shadow-md p-6"
+                                    className="bg-white rounded-xl shadow p-6"
                                 >
 
                                     <div className="flex justify-between">
@@ -179,18 +167,14 @@ export default function CartPage() {
                                             </h2>
 
                                             <p className="text-gray-500 mt-2">
-                                                Price per item
-                                            </p>
-
-                                            <p className="text-xl font-semibold text-green-700">
-                                                ₹{item.price}
+                                                ₹{item.price} each
                                             </p>
 
                                         </div>
 
                                         <button
                                             onClick={() => removeItem(item.pid)}
-                                            className="text-red-500 hover:text-red-700"
+                                            className="text-red-600 hover:text-red-800"
                                         >
                                             Remove
                                         </button>
@@ -203,18 +187,18 @@ export default function CartPage() {
 
                                             <button
                                                 onClick={() => decreaseQty(item.pid)}
-                                                className="w-10 h-10 rounded bg-gray-200 hover:bg-gray-300 text-xl"
+                                                className="w-10 h-10 rounded bg-gray-200 hover:bg-gray-300"
                                             >
                                                 -
                                             </button>
 
-                                            <span className="text-xl font-semibold w-10 text-center">
+                                            <span className="text-xl font-bold w-8 text-center">
                                                 {item.qty}
                                             </span>
 
                                             <button
                                                 onClick={() => increaseQty(item.pid)}
-                                                className="w-10 h-10 rounded bg-gray-200 hover:bg-gray-300 text-xl"
+                                                className="w-10 h-10 rounded bg-gray-200 hover:bg-gray-300"
                                             >
                                                 +
                                             </button>
@@ -243,37 +227,30 @@ export default function CartPage() {
 
                         <div>
 
-                            <div className="bg-white rounded-xl shadow-md p-6 sticky top-6">
+                            <div className="bg-white rounded-xl shadow p-6 sticky top-6">
 
                                 <h2 className="text-2xl font-bold mb-6">
                                     Order Summary
                                 </h2>
 
-                                <div className="flex justify-between mb-4">
-                                    <span>Unique Products</span>
+                                <div className="flex justify-between mb-3">
+                                    <span>Products</span>
                                     <span>{totalItems}</span>
                                 </div>
 
-                                <div className="flex justify-between mb-4">
-                                    <span>Total Quantity</span>
+                                <div className="flex justify-between mb-3">
+                                    <span>Quantity</span>
                                     <span>{totalQuantity}</span>
                                 </div>
 
-                                <hr className="my-5" />
+                                <hr className="my-4" />
 
                                 <div className="flex justify-between text-2xl font-bold">
-
                                     <span>Total</span>
-
-                                    <span>
-                                        ₹{totalPrice}
-                                    </span>
-
+                                    <span>₹{totalPrice}</span>
                                 </div>
 
-                                <button
-                                    className="mt-8 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold"
-                                >
+                                <button className="mt-8 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
                                     Proceed to Checkout
                                 </button>
 
@@ -285,7 +262,6 @@ export default function CartPage() {
                 )}
 
             </div>
-
         </div>
     )
 }

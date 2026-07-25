@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const authencate = require("../middleware/authMiddle");
+const authenticate = require("../middleware/authMiddle");
 const validate = require("../middleware/validate");
 const { addCartValidator } = require("../middleware/validators");
 
@@ -12,8 +12,7 @@ const db = require("../databse");
 GET MY CART
 =========================================
 */
-
-router.get("/my-cart", authencate, (req, res) => {
+router.get("/my-cart", authenticate, (req, res) => {
     const id = req.user.id;
 
     const sql = `
@@ -23,8 +22,7 @@ router.get("/my-cart", authencate, (req, res) => {
             p.price,
             c.qty
         FROM cart c
-        JOIN pickles p
-            ON c.pid = p.pid
+        JOIN pickles p ON c.pid = p.pid
         WHERE c.id = ?
     `;
 
@@ -47,41 +45,40 @@ router.get("/my-cart", authencate, (req, res) => {
 /*
 =========================================
 ADD TO CART
-If item already exists,
-increase quantity.
 =========================================
 */
-
 router.post(
     "/cart",
-    authencate,
+    authenticate,
     addCartValidator,
     validate,
     (req, res) => {
         const id = req.user.id;
         const { pid, qty } = req.body;
 
-        const checkSql =
-            "SELECT qty FROM cart WHERE id=? AND pid=?";
+        db.query(
+            "SELECT pid FROM pickles WHERE pid=?",
+            [pid],
+            (err, product) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        message: "Database error",
+                        error: err.message,
+                    });
+                }
 
-        db.query(checkSql, [id, pid], (err, result) => {
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    message: "Database error",
-                    error: err.message,
-                });
-            }
-
-            if (result.length > 0) {
-
-                const newQty = result[0].qty + qty;
+                if (product.length === 0) {
+                    return res.status(404).json({
+                        ok: false,
+                        message: "Product not found",
+                    });
+                }
 
                 db.query(
-                    "UPDATE cart SET qty=? WHERE id=? AND pid=?",
-                    [newQty, id, pid],
-                    (err) => {
-
+                    "SELECT qty FROM cart WHERE id=? AND pid=?",
+                    [id, pid],
+                    (err, cart) => {
                         if (err) {
                             return res.status(500).json({
                                 ok: false,
@@ -90,57 +87,76 @@ router.post(
                             });
                         }
 
-                        res.json({
-                            ok: true,
-                            message: "Quantity updated",
-                        });
-                    }
-                );
+                        if (cart.length > 0) {
+                            const newQty = cart[0].qty + qty;
 
-            } else {
+                            db.query(
+                                "UPDATE cart SET qty=? WHERE id=? AND pid=?",
+                                [newQty, id, pid],
+                                (err) => {
+                                    if (err) {
+                                        return res.status(500).json({
+                                            ok: false,
+                                            message: "Database error",
+                                            error: err.message,
+                                        });
+                                    }
 
-                db.query(
-                    "INSERT INTO cart(id,pid,qty) VALUES(?,?,?)",
-                    [id, pid, qty],
-                    (err) => {
+                                    return res.json({
+                                        ok: true,
+                                        message: "Cart updated",
+                                        qty: newQty,
+                                    });
+                                }
+                            );
+                        } else {
+                            db.query(
+                                "INSERT INTO cart(id,pid,qty) VALUES(?,?,?)",
+                                [id, pid, qty],
+                                (err) => {
+                                    if (err) {
+                                        return res.status(500).json({
+                                            ok: false,
+                                            message: "Database error",
+                                            error: err.message,
+                                        });
+                                    }
 
-                        if (err) {
-                            return res.status(500).json({
-                                ok: false,
-                                message: "Database error",
-                                error: err.message,
-                            });
+                                    return res.status(201).json({
+                                        ok: true,
+                                        message: "Added to cart",
+                                    });
+                                }
+                            );
                         }
-
-                        res.json({
-                            ok: true,
-                            message: "Added to cart",
-                        });
                     }
                 );
-
             }
-        });
+        );
     }
 );
 
 /*
 =========================================
-INCREASE / DECREASE QUANTITY
+CHANGE QUANTITY
 =========================================
 */
-
-router.patch("/cart/:pid", authencate, (req, res) => {
-
+router.patch("/cart/:pid", authenticate, (req, res) => {
     const id = req.user.id;
-    const pid = req.params.pid;
+    const pid = Number(req.params.pid);
     const { action } = req.body;
+
+    if (!["increase", "decrease"].includes(action)) {
+        return res.status(400).json({
+            ok: false,
+            message: "Action must be 'increase' or 'decrease'",
+        });
+    }
 
     db.query(
         "SELECT qty FROM cart WHERE id=? AND pid=?",
         [id, pid],
         (err, result) => {
-
             if (err) {
                 return res.status(500).json({
                     ok: false,
@@ -158,21 +174,13 @@ router.patch("/cart/:pid", authencate, (req, res) => {
 
             let qty = result[0].qty;
 
-            if (action === "increase") {
-                qty++;
-            }
-
-            if (action === "decrease") {
-                qty--;
-            }
+            qty = action === "increase" ? qty + 1 : qty - 1;
 
             if (qty <= 0) {
-
-                db.query(
+                return db.query(
                     "DELETE FROM cart WHERE id=? AND pid=?",
                     [id, pid],
                     (err) => {
-
                         if (err) {
                             return res.status(500).json({
                                 ok: false,
@@ -181,22 +189,18 @@ router.patch("/cart/:pid", authencate, (req, res) => {
                             });
                         }
 
-                        res.json({
+                        return res.json({
                             ok: true,
                             message: "Item removed",
                         });
-
                     }
                 );
-
-                return;
             }
 
             db.query(
                 "UPDATE cart SET qty=? WHERE id=? AND pid=?",
                 [qty, id, pid],
                 (err) => {
-
                     if (err) {
                         return res.status(500).json({
                             ok: false,
@@ -207,15 +211,13 @@ router.patch("/cart/:pid", authencate, (req, res) => {
 
                     res.json({
                         ok: true,
+                        message: "Quantity updated",
                         qty,
                     });
-
                 }
             );
-
         }
     );
-
 });
 
 /*
@@ -223,17 +225,14 @@ router.patch("/cart/:pid", authencate, (req, res) => {
 REMOVE ITEM
 =========================================
 */
-
-router.delete("/cart/:pid", authencate, (req, res) => {
-
+router.delete("/cart/:pid", authenticate, (req, res) => {
     const id = req.user.id;
-    const pid = req.params.pid;
+    const pid = Number(req.params.pid);
 
     db.query(
         "DELETE FROM cart WHERE id=? AND pid=?",
         [id, pid],
-        (err) => {
-
+        (err, result) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
@@ -242,14 +241,19 @@ router.delete("/cart/:pid", authencate, (req, res) => {
                 });
             }
 
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    ok: false,
+                    message: "Cart item not found",
+                });
+            }
+
             res.json({
                 ok: true,
-                message: "Item removed",
+                message: "Item removed successfully",
             });
-
         }
     );
-
 });
 
 module.exports = router;
