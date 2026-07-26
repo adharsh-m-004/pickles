@@ -10,16 +10,42 @@ interface CartItem {
     qty: number
 }
 
+interface User {
+    id: number
+    username: string
+    email?: string
+}
+
 export default function CartPage() {
     const router = useRouter()
-
+    const [user, setUser] = useState<User | null>(null)
     const [cart, setCart] = useState<CartItem[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchCart()
     }, [])
+    const fetchUser = async () => {
+        try {
+            const response = await fetch('/api/auth/me', {
+                method: 'POST',
+                credentials: 'include',
+            })
 
+            if (!response.ok) {
+                router.push('/login')
+                return
+            }
+
+            const result = await response.json()
+            setUser(result.user)
+        } catch (err) {
+            console.error(err)
+            router.push('/login')
+        } finally {
+            setLoading(false)
+        }
+    }
     const fetchCart = async () => {
         try {
             const response = await fetch('/api/cart/my-cart', {
